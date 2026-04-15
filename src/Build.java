@@ -19,7 +19,7 @@ public class Build {
     
   }
 
-  public static void printShortWordsHelper(Vertex<String> vertex, int k, Set<Vertex<String>> seen) {
+  private static void printShortWordsHelper(Vertex<String> vertex, int k, Set<Vertex<String>> seen) {
     
     if (vertex == null || seen.contains(vertex)) return;
 
@@ -42,7 +42,28 @@ public class Build {
    * @return the longest reachable word, or an empty string if the vertex is null
    */
   public static String longestWord(Vertex<String> vertex) {
-    return "";
+    Set<Vertex<String>> seen = new HashSet<>();
+
+    return longestWordHelper(vertex, seen);
+  }
+
+  private static String longestWordHelper(Vertex<String> vertex, Set<Vertex<String>> seen) {
+
+    if (vertex == null || seen.contains(vertex)) return "";
+
+    seen.add(vertex);
+
+    String longestWord = vertex.data;
+
+    for(Vertex<String> neighbor: vertex.neighbors) {
+      String possible = longestWordHelper(neighbor, seen);
+
+      if(possible.length() > longestWord.length()) {
+        longestWord = possible;
+      }
+    }
+    return longestWord;
+
   }
 
   /**
@@ -53,6 +74,12 @@ public class Build {
    * @param <T> the type of values stored in the vertices
    */
   public static <T> void printSelfLoopers(Vertex<T> vertex) {
+    Set<Vertex<T>> seen = new HashSet<>();
+    
+  }
+
+  private static <T> void printSelfLoopers(Vertex<T> vertex, Set<Vertex<T>> seen) {
+    
   }
 
   /**
